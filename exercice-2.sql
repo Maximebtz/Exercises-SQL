@@ -1,17 +1,24 @@
--- ARTICLES (NOART, LIBELLE, STOCK, PRIXINVENT)
--- FOURNISSEURS (NOFOUR, NOMFOUR, ADRFOUR, VILLEFOUR)
--- ACHETER (NOFOUR#, NOART#, PRIXACHAT, DELAI)
+
 
 -- Affichez les résultats suivants avec une solution SQL :
 
     -- a) Numéros et libellés des articles dont le stock est inférieur à 10 ?
-    
+        
+        SELECT a.art_id, a.libelle, a.stock
+        FROM article a
+        WHERE a.stock < 10;
     
     -- b) Liste des articles dont le prix d'inventaire est compris entre 100 et 300 ?
     
+        SELECT a.art_id, a.libelle, a.stock, a.prix_invent
+        FROM article a
+        WHERE a.prix_invent >= 100 AND a.prix_invent <= 300;
     
     -- c) Liste des fournisseurs dont on ne connaît pas l'adresse ?
     
+        SELECT f.four_id, f.nom_four
+        FROM fournisseur f
+        WHERE f.adr_four IS NULL AND f.ville_four IS NULL;
     
     -- d) Liste des fournisseurs dont le nom commence par "STE" ?
     
