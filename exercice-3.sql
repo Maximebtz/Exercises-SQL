@@ -89,7 +89,7 @@
         INNER JOIN matiere m ON ev.codemat = m.codemat 
         GROUP BY e.etudiant_id, e.nom, e.prenom;
 
-      -- * Indique que nous souhaitons retounrer toute les colonnes de 'Moyenne'  
+
         SELECT *
         FROM Moyennes;
     
@@ -108,7 +108,7 @@
     -- s) Moyennes des notes pour les matières (indiquer le libellé) comportant plus d'une épreuve
     
         CREATE VIEW MoyennesMatimatieres AS
-        SELECT m.libellemat, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne
+        SELECT m.libellemat, SUM(ev.note * m.codemat) / SUM(m.codemat) AS moyenne
         FROM etudiant e
         INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
         INNER JOIN matiere m ON ev.codemat = m.codemat

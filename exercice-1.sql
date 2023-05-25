@@ -63,7 +63,7 @@
    
     -- f) Quelle est la moyenne générale de la promotion ? (cf. question e)
     
-        CREATE VIEW MoyennesGeneralEtudiants AS
+        CREATE VIEW MoyennesGeneralPromo AS
         SELECT e.nom, e.prenom, e.etudiant_id, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne_generale
         FROM etudiant e
         INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
@@ -71,7 +71,7 @@
         GROUP BY e.etudiant_id, e.nom, e.prenom;
 
         SELECT AVG(moyenne_generale) AS moyenne_generale_promotion
-        FROM MoyennesGeneralEtudiants;
+        FROM MoyennesGeneralPromo;
     
 
     -- g) Quels sont les étudiants qui ont une moyenne générale supérieure ou égale à la moyenne générale de la promotion ? (cf. question e)
