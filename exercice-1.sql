@@ -29,7 +29,7 @@
         JOIN matiere m ON ev.codemat = m.codemat
       -- Groupement des colonnes pour obtenir une ligne  
         GROUP BY e.etudiant_id, e.nom, e.prenom, m.libellemat;
-
+        
       -- * Indique que nous souhaitons retounrer toute les colonnes de 'Moyenne'  
         SELECT *
         FROM Moyennes;
