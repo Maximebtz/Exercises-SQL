@@ -85,7 +85,7 @@
 
         SELECT *
         FROM MoyenneGeneraleEtudiants
-      -- Chercher où les moyennes sont sup u egales et reprendre le SELECT avg(m_g) ainsi que le FROM M.G.E. utilisés haut dessus 
+      -- Chercher où les moyennes sont sup ou egales et reprendre le SELECT avg(m_g) ainsi que le FROM M.G.E. utilisés haut dessus 
         WHERE moyenne_generale >= (
         SELECT AVG(moyenne_generale)
         FROM MoyenneGeneraleEtudiants
