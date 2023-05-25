@@ -6,7 +6,7 @@
 
     -- a) Quel est le nombre total d'étudiants ?
         
-        SELECT etudiant_id
+        SELECT count(etudiant_id) as NbEtudiants
         FROM etudiant 
 
 
@@ -19,7 +19,7 @@
     -- c) Quelles sont les moyennes de chaque étudiant dans chacune des matières ? (utilisez CREATE VIEW)
       
       -- Utilisation d'une vue   
-        CREATE VIEW MoyennesEtudiants AS
+        CREATE VIEW Moyennes AS
       -- Selection des colonnes "nom" et "prenom" de la table "etudiant", la colonne "libellemat" de la table matiere utilisatien de SUM() et des notes + coef pour faire le caclcul de moyennes ainsi que "AS MOYENNE" pour donner un nom altérnatif à la colonne calculée  
         SELECT e.nom, e.prenom, m.libellemat, SUM(ev.note * m.coeffmat) / SUM(m.coeffmat) AS moyenne
       -- Tables à partir des quelles nous selectionnons les données  
@@ -29,7 +29,7 @@
         JOIN matiere m ON ev.codemat = m.codemat
       -- Groupement des colonnes pour obtenir une ligne  
         GROUP BY e.etudiant_id, e.nom, e.prenom, m.libellemat;
-        
+
       -- * Indique que nous souhaitons retounrer toute les colonnes de 'Moyenne'  
         SELECT *
         FROM Moyennes;

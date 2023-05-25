@@ -21,21 +21,35 @@
         WHERE f.adr_four IS NULL AND f.ville_four IS NULL;
     
     -- d) Liste des fournisseurs dont le nom commence par "STE" ?
-    
+
+        SELECT *
+        FROM fournisseur f
+        WHERE f.nom_four LIKE 'STE%';
     
     -- e) Noms et adresses des fournisseurs qui proposent des articles pour lesquels le délai d'approvisionnement est supérieur à 20 jours ?
-    
+        
+        SELECT *
+        FROM fournisseur f
+        JOIN acheter a ON f.four_id = a.four_id
+        WHERE a.delai>20;
     
     -- f) Nombre d'articles référencés ?
-    
+
+        SELECT COUNT(*) AS NbArticles
+        FROM articles a
     
     -- g) Valeur du stock ?
-    
+
+        SELECT SUM(ROUND (a.prix_invent, 2)) AS prix_total
+        FROM articles a
     
     -- h) Numéros et libellés des articles triés dans l'ordre décroissant des stocks ?
-    
+
+        SELECT a.art_id, a.libelle, a.stock
+        FROM articles a
+        ORDER BY a.stock DESC
     
     -- i) Liste pour chaque article (numéro et libellé) du prix d'achat maximum, minimum et moyen ?
-    
+        
     
     -- j) Délai moyen pour chaque fournisseur proposant au moins 2 articles ?
