@@ -25,8 +25,8 @@
       -- Tables à partir des quelles nous selectionnons les données  
         FROM etudiant e
       -- ON == jointure lors de combinaison de plusieur stables, = == cmparer les valeurs des colonnes correspondantes lors de la jointure  
-        JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
-        JOIN matiere m ON ev.codemat = m.codemat
+        INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
+        INNER JOIN matiere m ON ev.codemat = m.codemat
       -- Groupement des colonnes pour obtenir une ligne  
         GROUP BY e.etudiant_id, e.nom, e.prenom, m.libellemat;
 
@@ -40,8 +40,8 @@
         CREATE VIEW MoyennesMatimatieres AS
         SELECT m.libellemat, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne
         FROM etudiant e
-        JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
-        JOIN matiere m ON ev.codemat = m.codemat
+        INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
+        INNER JOIN matiere m ON ev.codemat = m.codemat
         GROUP BY m.libellemat;
 
         SELECT *
@@ -53,8 +53,8 @@
         CREATE VIEW MoyennesGeneralEtudiants AS
         SELECT e.nom, e.prenom, e.etudiant_id, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne_generale
         FROM etudiant e
-        JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
-        JOIN matiere m ON ev.codemat = m.codemat
+        INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
+        INNER JOIN matiere m ON ev.codemat = m.codemat
         GROUP BY e.etudiant_id, e.nom, e.prenom;
 
         SELECT *
@@ -66,8 +66,8 @@
         CREATE VIEW MoyennesGeneralEtudiants AS
         SELECT e.nom, e.prenom, e.etudiant_id, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne_generale
         FROM etudiant e
-        JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
-        JOIN matiere m ON ev.codemat = m.codemat
+        INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
+        INNER JOIN matiere m ON ev.codemat = m.codemat
         GROUP BY e.etudiant_id, e.nom, e.prenom;
 
         SELECT AVG(moyenne_generale) AS moyenne_generale_promotion
@@ -79,8 +79,8 @@
         CREATE VIEW MoyennesGeneralEtudiants AS
         SELECT e.nom, e.prenom, e.etudiant_id, SUM(EV.NOTE * M.COEFFMAT) / SUM(M.COEFFMAT) AS moyenne_generale
         FROM etudiant e
-        JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
-        JOIN matiere m ON ev.codemat = m.codemat
+        INNER JOIN evaluer ev ON e.etudiant_id = ev.etudiant_id
+        INNER JOIN matiere m ON ev.codemat = m.codemat
         GROUP BY e.etudiant_id, e.nom, e.prenom;
 
         SELECT *
