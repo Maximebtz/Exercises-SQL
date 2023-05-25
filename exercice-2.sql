@@ -40,7 +40,7 @@
     
     -- g) Valeur du stock ?
 
-        SELECT SUM(ROUND (a.prix_invent, 2)) AS prix_total
+        SELECT ROUND(SUM(a.prix_invent), 2) AS prix_total
         FROM articles a
     
     -- h) Numéros et libellés des articles triés dans l'ordre décroissant des stocks ?
@@ -50,6 +50,10 @@
         ORDER BY a.stock DESC
     
     -- i) Liste pour chaque article (numéro et libellé) du prix d'achat maximum, minimum et moyen ?
-        
+
+        SELECT a.art_id, a.libelle, MAX(ac.prix_achat) AS prix_max, MAX(ac.prix_achat) AS prix_min, ROUND(AVG(ac.prix_achat), 2) AS prix_moyen
+        FROM acheter ac
+        INNER JOIN articles a ON ac.art_id = a.art_id
+        GROUP BY a.art_id, a.libelle;
     
     -- j) Délai moyen pour chaque fournisseur proposant au moins 2 articles ?
