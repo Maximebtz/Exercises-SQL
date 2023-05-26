@@ -10,7 +10,6 @@
         INSERT INTO fournisseur (nom_fournisseur, statut_fournisseur, ville_fournisseur) 
       -- VALUES pour add les valeurs  
         VALUES ( 'Maxime', 'Entrepreneur', 'Colmar');
-
     
     -- b) Supprimer tous les produits de couleur noire et de numéros compris entre 100 et 1999
 
