@@ -59,22 +59,62 @@
     
     -- 8. Nom du ou des personnages qui ont pris le plus de casques dans la bataille 'Bataille du villagegaulois'.
     
-        
+        SELECT pe.nom_personnage, MAX(pe_ca.qte) AS PlusDeCasquePris
+        FROM prendre_casque pe_ca
+        INNER JOIN personnage pe ON pe.id_personnage = pe_ca.id_personnage
+        INNER JOIN bataille ba ON pe_ca.id_bataille = ba.id_bataille
+        WHERE ba.nom_bataille = 'Bataille du village gaulois'
+        GROUP BY pe.nom_personnage
+        ORDER BY PlusDeCasquePris DESC;
     
     -- 9. Nom des personnages et leur quantité de potion bue (en les classant du plus grand buveur au plus petit).
     
+        SELECT pe.nom_personnage, bo.dose_boire
+        FROM boire bo
+        INNER JOIN personnage pe ON bo.id_personnage = pe.id_personnage
+        ORDER BY bo.dose_boire DESC;
     
     -- 10. Nom de la bataille où le nombre de casques pris a été le plus important.
-    
+        
+        SELECT ba.nom_bataille 
+        FROM prendre_casque pc
+        INNER JOIN bataille ba ON pc.id_bataille = ba.id_bataille
+        WHERE pc.qte = (SELECT MAX(qte) FROM prendre_casque)
     
     -- 11. Combien existe-t-il de casques de chaque type et quel est leur coût total ? (classés par nombre décroissant)
     
+        SELECT tc.nom_type_casque, COUNT(ca.id_casque) AS Count, SUM(ca.cout_casque) AS TotalCost
+        FROM casque ca
+        INNER JOIN type_casque tc ON ca.id_type_casque = tc.id_type_casque
+        GROUP BY tc.nom_type_casque
+        ORDER BY Count DESC;
     
     -- 12. Nom des potions dont un des ingrédients est le poisson frais.
-    
+
+        SELECT po.nom_potion, ing.nom_ingredient
+        FROM composer co
+        INNER JOIN potion po ON co.id_potion = po.id_potion
+        INNER JOIN ingredient ing ON co.id_ingredient = ing.id_ingredient
+        WHERE ing.nom_ingredient = 'Poisson frais';
     
     -- 13. Nom du / des lieu(x) possédant le plus d'habitants, en dehors du village gaulois.
     
+        SELECT l.nom_lieu, COUNT(pe.id_personnage) AS NombreVillageois
+        FROM personnage pe
+        INNER JOIN lieu l ON pe.id_lieu = l.id_lieu
+        WHERE l.nom_lieu != 'Village gaulois'
+        GROUP BY l.nom_lieu
+        HAVING COUNT(pe.id_personnage) = (
+            SELECT COUNT(pe2.id_personnage)
+            FROM personnage pe2
+            INNER JOIN lieu l2 ON pe2.id_lieu = l2.id_lieu
+            WHERE l2.nom_lieu != 'Village gaulois'
+            GROUP BY l2.nom_lieu
+            ORDER BY COUNT(pe2.id_personnage) DESC
+            LIMIT 1
+        );
+
+       
     
     -- 14. Nom des personnages qui n'ont jamais bu aucune potion.
     
