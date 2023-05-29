@@ -113,10 +113,33 @@
             ORDER BY COUNT(pe2.id_personnage) DESC
             LIMIT 1
         );
-
-       
     
     -- 14. Nom des personnages qui n'ont jamais bu aucune potion.
     
-    
+        SELECT pe.nom_personnage
+        FROM personnage pe
+        LEFT JOIN  boire bo ON pe.id_personnage = bo.id_personnage
+        WHERE bo.id_personnage IS NULL;
+
     -- 15. Nom du / des personnages qui n'ont pas le droit de boire de la potion 'Magique'.
+
+
+
+-- En écrivant toujours des requêtes SQL, modifiez la base de données comme suit :
+    
+    -- A. Ajoutez le personnage suivant : Champdeblix, agriculteur résidant à la ferme Hantassion de Rotomagus.
+    
+    
+    -- B. Autorisez Bonemine à boire de la potion magique, elle est jalouse d'Iélosubmarine...
+    
+    
+    -- C. Supprimez les casques grecs qui n'ont jamais été pris lors d'une bataille.
+    
+    
+    -- D. Modifiez l'adresse de Zérozérosix : il a été mis en prison à Condate.
+    
+    
+    -- E. La potion 'Soupe' ne doit plus contenir de persil.
+    
+    
+    -- F. Obélix s'est trompé : ce sont 42 casques Weisenau, et non Ostrogoths, qu'il a pris lors de la bataille 'Attaque de la banque postale'. Corrigez son erreur !
