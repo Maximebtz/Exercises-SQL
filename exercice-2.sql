@@ -56,4 +56,3 @@
         INNER JOIN articles a ON ac.art_id = a.art_id
         GROUP BY a.art_id, a.libelle;
     
-    -- j) Délai moyen pour chaque fournisseur proposant au moins 2 articles ?
