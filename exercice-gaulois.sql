@@ -79,7 +79,11 @@
         SELECT ba.nom_bataille 
         FROM prendre_casque pc
         INNER JOIN bataille ba ON pc.id_bataille = ba.id_bataille
-        WHERE pc.qte = (SELECT MAX(qte) FROM prendre_casque)
+        WHERE 
+            pc.qte = (
+                SELECT MAX(qte) 
+                FROM prendre_casque
+            );
     
     -- 11. Combien existe-t-il de casques de chaque type et quel est leur coût total ? (classés par nombre décroissant)
     
@@ -123,6 +127,10 @@
 
     -- 15. Nom du / des personnages qui n'ont pas le droit de boire de la potion 'Magique'.
 
+        SELECT p.nom_personnage
+        FROM personnage p
+        LEFT JOIN autoriser_boire ab ON p.id_personnage = ab.id_personnage
+        WHERE ab.id_potion IS NULL;
 
 
 -- En écrivant toujours des requêtes SQL, modifiez la base de données comme suit :
@@ -130,25 +138,40 @@
     -- A. Ajoutez le personnage suivant : Champdeblix, agriculteur résidant à la ferme Hantassion de Rotomagus.
     
         INSERT INTO personnage (nom_personnage, adresse_personnage,id_lieu, id_specialite)
-        VALUE ('Chamdeblix', 'Ferme Hantassion',6 , 12)
+        VALUE ('Chamdeblix', 'Ferme Hantassion',6 , 12);
     
     -- B. Autorisez Bonemine à boire de la potion magique, elle est jalouse d'Iélosubmarine...
 
         INSERT INTO autoriser_boire (id_potion, id_personnage)
-        VALUE (1, 12)
+        VALUE (1, 12);
     
-    -- C. Supprimez les casques grecs qui n'ont jamais été pris lors d'une bataille.
+    -- C. Supprimez les typcasques grecs qui n'ont jamais été pris lors d'une bataille.
     
-    
+        DELETE FROM type_casque
+        WHERE id_type_casque IN (
+            SELECT tc.id_type_casque
+            FROM type_casque tc
+            LEFT JOIN casque c ON tc.id_type_casque = c.id_type_casque
+            WHERE c.id_casque IS NULL
+        );
+
     -- D. Modifiez l'adresse de Zérozérosix : il a été mis en prison à Condate.
     
         UPDATE personnage pe 
         SET pe.adresse_personnage = 'Prison', pe.id_lieu = 9
-        WHERE pe.nom_personnage = 'Zérozérosix'
+        WHERE pe.nom_personnage = 'Zérozérosix';
     
     -- E. La potion 'Soupe' ne doit plus contenir de persil.
 
         DELETE FROM composer co
-        WHERE co.id_potion = 9 AND co.id_ingredient = 19
+        WHERE co.id_potion = 9 AND co.id_ingredient = 19;
     
     -- F. Obélix s'est trompé : ce sont 42 casques Weisenau, et non Ostrogoths, qu'il a pris lors de la bataille 'Attaque de la banque postale'. Corrigez son erreur !
+
+        UPDATE casque
+        SET nom_casque = 'Weisenau'
+        WHERE nom_casque = 'Ostrogoths' AND id_bataille = (
+            SELECT id_bataille
+            FROM bataille
+            WHERE nom_bataille = 'Attaque de la banque postale'
+        ) AND qte = 42;
