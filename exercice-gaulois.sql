@@ -129,17 +129,26 @@
     
     -- A. Ajoutez le personnage suivant : Champdeblix, agriculteur résidant à la ferme Hantassion de Rotomagus.
     
+        INSERT INTO personnage (nom_personnage, adresse_personnage,id_lieu, id_specialite)
+        VALUE ('Chamdeblix', 'Ferme Hantassion',6 , 12)
     
     -- B. Autorisez Bonemine à boire de la potion magique, elle est jalouse d'Iélosubmarine...
-    
+
+        INSERT INTO autoriser_boire (id_potion, id_personnage)
+        VALUE (1, 12)
     
     -- C. Supprimez les casques grecs qui n'ont jamais été pris lors d'une bataille.
     
     
     -- D. Modifiez l'adresse de Zérozérosix : il a été mis en prison à Condate.
     
+        UPDATE personnage pe 
+        SET pe.adresse_personnage = 'Prison', pe.id_lieu = 9
+        WHERE pe.nom_personnage = 'Zérozérosix'
     
     -- E. La potion 'Soupe' ne doit plus contenir de persil.
-    
+
+        DELETE FROM composer co
+        WHERE co.id_potion = 9 AND co.id_ingredient = 19
     
     -- F. Obélix s'est trompé : ce sont 42 casques Weisenau, et non Ostrogoths, qu'il a pris lors de la bataille 'Attaque de la banque postale'. Corrigez son erreur !
