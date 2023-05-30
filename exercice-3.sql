@@ -43,8 +43,10 @@
         WHERE e.ville LIKE 'LL%'
     
     -- i) Prénoms des étudiants de nom Dupont, Durand ou Martin
-
-
+    
+        SELECT et.nom, et.prenom
+        FROM etudiant et
+        WHERE et.nom = 'Dupon' or et.nom = 'Duran' or et.nom = 'Martin'
     
     -- j) Somme des coefficients de toutes les matières
 
