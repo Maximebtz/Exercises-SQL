@@ -72,8 +72,9 @@
     
     -- n) Liste des notes en précisant pour chacune le nom et le prénom de l'étudiant qui l'a obtenue
 
-        SELECT n.note
+        SELECT e.nom, e.premon, n.note
         FROM Notation n
+        INNER JOIN etudiant e ON n.etudiant_id = e.etudiant_id
 
     -- p) Nom et prénom des étudiants qui ont obtenu au moins une note égale à 20
     
@@ -119,4 +120,3 @@
         SELECT *
         FROM MoyennesMatieres;
 
-    -- t) Moyennes des notes obtenues aux épreuves (indiquer le numéro d'épreuve) où moins de 6 étudiants ont été notés
