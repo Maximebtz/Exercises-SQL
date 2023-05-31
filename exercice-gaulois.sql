@@ -88,12 +88,13 @@
         SELECT ba.nom_bataille 
         FROM prendre_casque pc
         INNER JOIN bataille ba ON pc.id_bataille = ba.id_bataille
-        WHERE 
-            pc.qte = (
-                SELECT MAX(qte) 
-                FROM prendre_casque
-            );
-    
+        GROUP BY ba.nom_bataille
+        HAVING pc.qte >= ALL (
+            SELECT MAX(qte) 
+            FROM prendre_casque
+            GROUP BY id_bataille
+        )
+
     -- 11. Combien existe-t-il de casques de chaque type et quel est leur coût total ? (classés par nombre décroissant)
     
         SELECT tc.nom_type_casque, COUNT(ca.id_casque) AS Count, SUM(ca.cout_casque) AS TotalCost
@@ -117,14 +118,13 @@
         INNER JOIN lieu l ON pe.id_lieu = l.id_lieu
         WHERE l.nom_lieu != 'Village gaulois'
         GROUP BY l.nom_lieu
-        HAVING COUNT(pe.id_personnage) = (
+        HAVING COUNT(pe.id_personnage) >= ALL(
             SELECT COUNT(pe2.id_personnage)
             FROM personnage pe2
             INNER JOIN lieu l2 ON pe2.id_lieu = l2.id_lieu
             WHERE l2.nom_lieu != 'Village gaulois'
             GROUP BY l2.nom_lieu
             ORDER BY COUNT(pe2.id_personnage) DESC
-            LIMIT 1
         );
     
     -- 14. Nom des personnages qui n'ont jamais bu aucune potion.
