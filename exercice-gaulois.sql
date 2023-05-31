@@ -22,20 +22,20 @@
         FROM personnage pe
         INNER JOIN specialite sp ON pe.id_specialite = sp.id_specialite
         INNER JOIN lieu li ON pe.id_lieu = li.id_lieu
-        GROUP BY pe.nom_personnage, sp.nom_specialite, pe.adresse_personnage, li.nom_lieu
+        GROUP BY pe.id_personnage
         ORDER BY li.nom_lieu ASC, pe.nom_personnage ASC;
     
     -- 4. Nom des spécialités avec nombre de personnages par spécialité (trié par nombre de personnages décroissant).
     
-        SELECT sp.nom_specialite, COUNT(pe.id_personnage) AS NbPersonnage
+        SELECT sp.id_specialite, sp.nom_specialite, COUNT(pe.id_personnage) AS NbPersonnage
         FROM specialite sp
         INNER JOIN personnage pe ON sp.id_specialite = pe.id_specialite
-        GROUP BY sp.nom_specialite
+        GROUP BY sp.id_specialite
         ORDER BY NbPersonnage DESC;
     
     -- 5. Nom, date et lieu des batailles, classées de la plus récente à la plus ancienne (dates affichées au format jj/mm/aaaa).
 
-        SELECT ba.nom_bataille, ba.date_bataille, li.nom_lieu
+        SELECT ba.nom_bataille, DATE_FORMAT(ba.date_bataille, "%d/%m/%Y"), li.nom_lieu
         FROM bataille ba
         INNER JOIN lieu li ON ba.id_lieu = li.id_lieu
         ORDER BY ba.date_bataille DESC;    
