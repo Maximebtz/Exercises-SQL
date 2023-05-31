@@ -46,7 +46,7 @@
         FROM composer co
         INNER JOIN ingredient ing ON co.id_ingredient = ing.id_ingredient
         INNER JOIN potion po ON co.id_potion = po.id_potion
-        GROUP BY po.nom_potion 
+        GROUP BY po.id_potion 
         ORDER BY PrixPotion DESC;
 
     -- 7. Nom des ingrédients + coût + quantité de chaque ingrédient qui composent la potion 'Santé'.
@@ -69,10 +69,11 @@
     
     -- 9. Nom des personnages et leur quantité de potion bue (en les classant du plus grand buveur au plus petit).
     
-        SELECT pe.nom_personnage, bo.dose_boire
+        SELECT pe.nom_personnage, SUM(bo.dose_boire) AS sommeDose
         FROM boire bo
         INNER JOIN personnage pe ON bo.id_personnage = pe.id_personnage
-        ORDER BY bo.dose_boire DESC;
+		GROUP BY bo.id_personnage
+		ORDER BY sommeDose DESC
     
     -- 10. Nom de la bataille où le nombre de casques pris a été le plus important.
         
@@ -90,7 +91,7 @@
         SELECT tc.nom_type_casque, COUNT(ca.id_casque) AS Count, SUM(ca.cout_casque) AS TotalCost
         FROM casque ca
         INNER JOIN type_casque tc ON ca.id_type_casque = tc.id_type_casque
-        GROUP BY tc.nom_type_casque
+        GROUP BY tc.id_type_casque
         ORDER BY Count DESC;
     
     -- 12. Nom des potions dont un des ingrédients est le poisson frais.
@@ -123,7 +124,7 @@
         SELECT pe.nom_personnage
         FROM personnage pe
         LEFT JOIN  boire bo ON pe.id_personnage = bo.id_personnage
-        WHERE bo.id_personnage IS NULL;
+        WHERE bo.id_personnage IS NULL; -- or -> NOT IN boire;
 
     -- 15. Nom du / des personnages qui n'ont pas le droit de boire de la potion 'Magique'.
 
