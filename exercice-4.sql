@@ -21,3 +21,5 @@
         UPDATE fournisseur
         SET ville_fournisseur = 'Mulbach-sur-Munster'
         WHERE id_fournisseur = 1;
+
+        
